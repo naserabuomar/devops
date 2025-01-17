@@ -2,9 +2,10 @@ services:
   web:
     build: .
     ports:
-      - "80:80"
+      - "8080:80"
     volumes:
       - ./:/var/www/html
+      - /var/run/docker.sock:/var/run/docker.sock   
     depends_on:
       - db
 
@@ -21,11 +22,13 @@ services:
     image: phpmyadmin
     restart: always
     ports:
-      - "8080:80"
+      - "8082:80"
     environment:
       PMA_ARBITRARY: 1
     depends_on:
       - db
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock  
 
 volumes:
   db_data:

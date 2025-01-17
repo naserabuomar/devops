@@ -1,28 +1,28 @@
 <?php
-// اتصال بقاعدة البيانات
-$servername = "db"; // اسم خدمة قاعدة البيانات في docker-compose.yml
+
+$servername = "db"; 
 $username = "root";
-$password = "123"; // كلمة المرور التي ستستخدمها لقاعدة البيانات
+$password = "123"; 
 $dbname = "dictionary";
 
-// إنشاء الاتصال
+
 $conn = new mysqli($servername, $username, $password, $dbname);
 
-// التحقق من الاتصال
+
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// إذا تم إرسال كلمة من النموذج
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $word = $_POST['word'];
 
-    // البحث عن الكلمة في قاعدة البيانات
+
     $sql = "SELECT definition FROM words WHERE word = '$word'";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
-        // عرض التعريف
+
         while($row = $result->fetch_assoc()) {
             echo "Definition: " . $row["definition"];
         }
